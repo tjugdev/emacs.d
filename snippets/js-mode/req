@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name: require
+#key: req
+# --
+var ${1:$(let ((case-fold-search nil)) (downcase (replace-regexp-in-string "-" "_" (replace-regexp-in-string "\\\\([a-z0-9]\\\\)\\\\([A-Z]\\\\)" "\\\\1_\\\\2" (file-name-nondirectory (file-name-sans-extension yas-text))))))} = require('$1');
