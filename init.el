@@ -2,8 +2,8 @@
 (add-to-list 'load-path (concat user-emacs-directory "config"))
 
 (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
-			 ("org" . "http://orgmode.org/elpa/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("org" . "http://orgmode.org/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 (require 'package)
 (package-initialize)
@@ -24,9 +24,9 @@
 ;; eyecandy
 (set-face-attribute 'default nil :height 100)
 (load-theme (if (package-installed-p 'color-theme-solarized)
-		'solarized-dark
-	      'wombat)
-	    t)
+                'solarized-dark
+              'wombat)
+            t)
 
 ;; various tweaks
 (setq require-final-newline t)
@@ -39,6 +39,12 @@
 (setq make-backup-files t
       backup-directory-alist `(("." . "~/.emacs.d/.saves"))
       backup-by-copying t)
+
+;; No tabs!
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              c-basic-offset 4)
+(setq-default show-trailing-whitespace t)
 
 (require 'ido)
 (ido-mode t)
@@ -115,32 +121,32 @@
 
     ;; Use , as a window command prefix
     (mapc (lambda (state)
-	    (define-key state (kbd ",") nil)
-	    (define-key state (kbd ",,") 'evil-repeat-find-char-reverse)
-	    (define-key state (kbd ",h") 'evil-window-left)
-	    (define-key state (kbd ",l") 'evil-window-right)
-	    (define-key state (kbd ",k") 'evil-window-up)
-	    (define-key state (kbd ",j") 'evil-window-down)
-	    (define-key state (kbd ",c") 'evil-window-delete)
-	    (define-key state (kbd ",o") 'delete-other-windows)
-	    (define-key state (kbd ",H") 'evil-window-move-far-left)
-	    (define-key state (kbd ",L") 'evil-window-move-far-right)
-	    (define-key state (kbd ",K") 'evil-window-move-very-top)
-	    (define-key state (kbd ",J") 'evil-window-move-very-bottom))
-	  (list evil-normal-state-map evil-motion-state-map))
+            (define-key state (kbd ",") nil)
+            (define-key state (kbd ",,") 'evil-repeat-find-char-reverse)
+            (define-key state (kbd ",h") 'evil-window-left)
+            (define-key state (kbd ",l") 'evil-window-right)
+            (define-key state (kbd ",k") 'evil-window-up)
+            (define-key state (kbd ",j") 'evil-window-down)
+            (define-key state (kbd ",c") 'evil-window-delete)
+            (define-key state (kbd ",o") 'delete-other-windows)
+            (define-key state (kbd ",H") 'evil-window-move-far-left)
+            (define-key state (kbd ",L") 'evil-window-move-far-right)
+            (define-key state (kbd ",K") 'evil-window-move-very-top)
+            (define-key state (kbd ",J") 'evil-window-move-very-bottom))
+          (list evil-normal-state-map evil-motion-state-map))
     (define-key evil-normal-state-map (kbd "SPC") 'evilnc-comment-or-uncomment-lines)
     (define-key evil-visual-state-map (kbd "SPC") 'evilnc-comment-or-uncomment-lines)
 
     ;; Use ido to open files
     (defun my/ido-evil-file-cmd (cmd)
       (lambda (file)
-	 (interactive (list (ido-read-file-name "")))
-	 (funcall cmd nil file)))
+        (interactive (list (ido-read-file-name "")))
+        (funcall cmd nil file)))
     (define-key evil-ex-map "e " 'ido-find-file)
     (define-key evil-ex-map "b " 'ido-switch-buffer)
     (define-key evil-ex-map "sp " (my/ido-evil-file-cmd 'evil-window-split))
     (define-key evil-ex-map "vsp " (my/ido-evil-file-cmd 'evil-window-vsplit))
-  ))
+    ))
 
 ;; esc quits
 (defun minibuffer-keyboard-quit ()
