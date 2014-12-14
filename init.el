@@ -53,6 +53,7 @@
 (require 'my-flycheck)
 (require 'my-ag)
 (require 'my-yasnippet)
+(require 'my-magit)
 
 (use-package evil-leader
   :commands (evil-leader-mode global-evil-leader-mode)
@@ -64,9 +65,12 @@
   :config
   (progn
     (evil-leader/set-key
-      "a" 'ag-project-regexp
-      "d" 'dired-jump
-      "f" 'ido-find-file)))
+      (kbd "a") 'ag-project-regexp
+      (kbd "d") 'dired-jump
+      (kbd "f") 'ido-find-file
+      (kbd "gl") 'magit-log
+      (kbd "gs") 'magit-status
+      (kbd "gc") 'magit-commit)))
 
 (use-package evil
   :ensure t

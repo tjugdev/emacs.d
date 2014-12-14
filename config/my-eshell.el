@@ -1,5 +1,7 @@
 (require 'use-package)
 
+(declare-function evil-set-initial-state "evil-core")
+
 (defun my/toggle-eshell-buffer ()
   "Show/hide eshell buffer"
   (interactive)
@@ -10,7 +12,6 @@
         (select-window (split-window-below -20))
         (eshell)))))
 
-(declare-function evil-set-initial-state "evil-core")
 (eval-after-load 'evil
   '(progn
      (evil-set-initial-state 'eshell-mode 'emacs)))
