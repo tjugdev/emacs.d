@@ -10,11 +10,16 @@
         (select-window (split-window-below -20))
         (eshell)))))
 
-(global-set-key (kbd "<f8>")  'my/toggle-eshell-buffer)
-
 (declare-function evil-set-initial-state "evil-core")
-(eval-after-load "evil"
+(eval-after-load 'evil
   '(progn
      (evil-set-initial-state 'eshell-mode 'emacs)))
+(defun my/setup-eshell ()
+  "Set up my eshell config"
+  (linum-mode -1))
+
+(global-set-key (kbd "<f8>") 'my/toggle-eshell-buffer)
+
+(add-hook 'eshell-mode-hook 'my/setup-eshell)
 
 (provide 'my-eshell)

@@ -38,7 +38,8 @@
       scroll-preserve-screen-position t)
 (setq make-backup-files t
       backup-directory-alist `(("." . "~/.emacs.d/.saves"))
-      backup-by-copying t)
+      backup-by-copying t
+      auto-save-default nil)
 
 ;; No tabs!
 (setq-default indent-tabs-mode nil
@@ -49,28 +50,9 @@
 (require 'my-ido)
 (require 'my-dired)
 (require 'my-eshell)
-
-(use-package flycheck
-  :ensure t
-  :init
-  (progn
-    (global-flycheck-mode t)
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)
-                  flycheck-emacs-lisp-load-path 'inherit)))
-
-(use-package ag
-  :ensure t
-  :defer t
-  :init
-  (progn
-    (defun my/setup-ag ()
-      (switch-to-buffer-other-window "*ag search*"))
-    (add-hook 'ag-mode-hook 'my/setup-ag))
-  :config
-  (progn
-    (setq ag-highlight-search t)
-    (setq ag-reuse-buffers t)
-    (define-key ag-mode-map (kbd "k") nil)))
+(require 'my-flycheck)
+(require 'my-ag)
+(require 'my-yasnippet)
 
 (use-package evil-leader
   :commands (evil-leader-mode global-evil-leader-mode)
@@ -85,17 +67,6 @@
       "a" 'ag-project-regexp
       "d" 'dired-jump
       "f" 'ido-find-file)))
-
-(use-package yasnippet
-  :ensure t
-  :commands yas-global-mode
-  :init
-  (progn
-    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-    (yas-global-mode 1)
-    (defun disable-final-newline ()
-      (set (make-local-variable 'require-final-newline) nil))
-    (add-hook 'snippet-mode-hook 'disable-final-newline)))
 
 (use-package evil
   :ensure t
@@ -154,4 +125,3 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-(global-set-key [escape] 'evil-exit-emacs-state)
