@@ -46,24 +46,17 @@
               c-basic-offset 4)
 (setq-default show-trailing-whitespace t)
 
-(require 'ido)
-(ido-mode t)
-(setq ido-enable-flex-matching t
-      ido-everywhere t
-      ido-auto-merge-work-directories-length -1)
-(use-package ido-ubiquitous
-  :ensure t
-  :config
-  (progn
-    (ido-ubiquitous-mode t)))
-
-(use-package smex
-  :ensure t
-  :bind ("M-x" . smex))
+(require 'my-ido)
+(require 'my-dired)
+(require 'my-eshell)
 
 (use-package flycheck
-  :ensure t)
-(add-hook 'after-init-hook #'global-flycheck-mode)
+  :ensure t
+  :init
+  (progn
+    (global-flycheck-mode t)
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)
+                  flycheck-emacs-lisp-load-path 'inherit)))
 
 (use-package ag
   :ensure t
@@ -79,13 +72,6 @@
     (setq ag-reuse-buffers t)
     (define-key ag-mode-map (kbd "k") nil)))
 
-;; remapped global key bindings
-(global-set-key "\C-w"  'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-x\C-b" 'ibuffer)
-(global-set-key "\C-s" 'isearch-forward-regexp)
-(global-set-key "\C-r" 'isearch-backward-regexp)
-
 (use-package evil-leader
   :commands (evil-leader-mode global-evil-leader-mode)
   :ensure t
@@ -96,7 +82,9 @@
   :config
   (progn
     (evil-leader/set-key
-      "a" 'ag-regexp)))
+      "a" 'ag-project-regexp
+      "d" 'dired-jump
+      "f" 'ido-find-file)))
 
 (use-package yasnippet
   :ensure t
@@ -111,6 +99,7 @@
 
 (use-package evil
   :ensure t
+  :commands (evil-set-initial-state)
   :config
   (progn
     (evil-mode 1)
