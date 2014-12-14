@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t -*-
 (add-to-list 'load-path (concat user-emacs-directory "config"))
+(add-to-list 'load-path (concat user-emacs-directory "config/languages"))
 
 (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
                          ("org" . "http://orgmode.org/elpa/")
@@ -52,8 +53,10 @@
 (require 'my-eshell)
 (require 'my-flycheck)
 (require 'my-ag)
+(require 'my-autocomplete)
 (require 'my-yasnippet)
 (require 'my-magit)
+(require 'my-languages)
 
 (use-package evil-leader
   :commands (evil-leader-mode global-evil-leader-mode)
