@@ -8,14 +8,23 @@
   (progn
     (require 'auto-complete-config)
     (ac-config-default)
-    ;; disable auto-start so that yasnippets plays nicely with auto-complete
-    (setq ac-auto-start nil)
-    (setq ac-use-comphist nil)
-    (setq ac-dwim nil)
+
+    (setq ac-auto-show-menu t)
+    (setq ac-auto-start t)
+    (setq ac-show-menu-immediately-on-auto-complete t)
     (setq ac-use-menu-map t)
 
-    (ac-set-trigger-key "TAB")
-    (ac-set-trigger-key "<tab>")
+    (defun my/yasnippet-ac-integration ()
+      "Disable autocomplete when able to expand a snippet.  Otherwise, autocomplete."
+      (add-hook 'yas-before-expand-snippet-hook (lambda () (auto-complete-mode -1)))
+      (add-hook 'yas-after-exit-snippet-hook (lambda () (auto-complete-mode t)))
+      (defadvice ac-expand (before advice-for-ac-expand activate)
+        (setq yas-fallback-behavior nil)
+        (when (yas-expand)
+          (ac-stop))))
+
+    (eval-after-load 'yasnippet
+      '(my/yasnippet-ac-integration))
 
     (eval-after-load 'evil
       '(progn

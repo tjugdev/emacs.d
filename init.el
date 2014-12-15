@@ -57,6 +57,7 @@
 (require 'my-yasnippet)
 (require 'my-magit)
 (require 'my-languages)
+(require 'my-tags)
 
 (use-package evil-leader
   :commands (evil-leader-mode global-evil-leader-mode)

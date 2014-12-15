@@ -1,5 +1,7 @@
 (require 'use-package)
 
+(declare-function evil-define-key "evil-core")
+
 (use-package js2-mode
   :ensure t
   :config
@@ -14,6 +16,10 @@
     (defun my/setup-tern ()
       (tern-mode t))
     (add-hook 'js-mode-hook 'my/setup-tern)
+
+    (eval-after-load 'evil
+      '(progn
+         (evil-define-key 'normal js-mode-map (kbd "M-.") 'tern-find-definition)))
 
     (use-package tern-auto-complete
       :ensure t
