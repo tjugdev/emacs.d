@@ -17,7 +17,8 @@
      (evil-set-initial-state 'eshell-mode 'emacs)))
 (defun my/setup-eshell ()
   "Set up my eshell config"
-  (linum-mode -1))
+  (linum-mode -1)
+  (setq show-trailing-whitespace -1))
 
 (global-set-key (kbd "<f8>") 'my/toggle-eshell-buffer)
 

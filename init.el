@@ -51,6 +51,7 @@
 (require 'my-ido)
 (require 'my-dired)
 (require 'my-eshell)
+(require 'my-ansi-term)
 (require 'my-flycheck)
 (require 'my-ag)
 (require 'my-autocomplete)

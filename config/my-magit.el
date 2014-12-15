@@ -15,10 +15,6 @@
     (eval-after-load 'evil
       '(progn
          (evil-set-initial-state 'magit-mode 'emacs)
-         (evil-set-initial-state 'git-commit-mode 'insert)
-
-         (evil-define-key 'emacs magit-mode-map
-           (kbd "j") 'magit-goto-next-section
-           (kbd "k") 'magit-goto-previous-section)))))
+         (evil-set-initial-state 'git-commit-mode 'insert)))))
 
 (provide 'my-magit)
