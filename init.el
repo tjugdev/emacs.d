@@ -23,16 +23,18 @@
 (setq inhibit-startup-message t)
 
 ;; eyecandy
-(set-face-attribute 'default nil :height 100)
+(set-face-attribute 'default nil :height 90)
 (load-theme (if (package-installed-p 'color-theme-solarized)
                 'solarized-dark
               'wombat)
             t)
+(add-to-list 'auto-mode-alist '("\\.ejs\\'" . html-mode))
 
 ;; various tweaks
 (setq require-final-newline t)
 (show-paren-mode t)
 (global-linum-mode t)
+(global-font-lock-mode t)
 (require 'saveplace)
 (setq-default save-place t)
 (setq scroll-conservatively 999
@@ -46,7 +48,7 @@
 (setq-default indent-tabs-mode nil
               tab-width 4
               c-basic-offset 4)
-(setq-default show-trailing-whitespace t)
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (require 'my-ido)
 (require 'my-dired)
@@ -59,6 +61,9 @@
 (require 'my-magit)
 (require 'my-languages)
 (require 'my-tags)
+(require 'my-projectile)
+(require 'my-persp)
+(require 'my-diff-hl)
 
 (use-package evil-leader
   :commands (evil-leader-mode global-evil-leader-mode)
@@ -70,12 +75,17 @@
   :config
   (progn
     (evil-leader/set-key
+      (kbd "<") 'persp-prev
+      (kbd ">") 'persp-next
       (kbd "a") 'ag-project-regexp
+      (kbd "c") 'projectile-persp-switch-project
       (kbd "d") 'dired-jump
       (kbd "f") 'ido-find-file
       (kbd "gl") 'magit-log
       (kbd "gs") 'magit-status
-      (kbd "gc") 'magit-commit)))
+      (kbd "gc") 'magit-commit
+      (kbd "p") 'projectile-find-file
+      (kbd "P") 'projectile-switch-project)))
 
 (use-package evil
   :ensure t
@@ -102,9 +112,11 @@
             (define-key state (kbd ",L") 'evil-window-move-far-right)
             (define-key state (kbd ",K") 'evil-window-move-very-top)
             (define-key state (kbd ",J") 'evil-window-move-very-bottom))
-          (list evil-normal-state-map evil-motion-state-map))
+          (list evil-normal-state-map evil-motion-state-map magit-mode-map))
     (define-key evil-normal-state-map (kbd "SPC") 'evilnc-comment-or-uncomment-lines)
     (define-key evil-visual-state-map (kbd "SPC") 'evilnc-comment-or-uncomment-lines)
+    (define-key evil-normal-state-map (kbd "]c") 'diff-hl-next-hunk)
+    (define-key evil-normal-state-map (kbd "[c") 'diff-hl-previous-hunk)
 
     ;; Use ido to open files
     (defun my/ido-evil-file-cmd (cmd)
@@ -134,3 +146,4 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+(global-set-key (kbd "<escape>") 'keyboard-quit)

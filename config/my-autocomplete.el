@@ -13,6 +13,7 @@
     (setq ac-auto-start t)
     (setq ac-show-menu-immediately-on-auto-complete t)
     (setq ac-use-menu-map t)
+    (ac-linum-workaround)
 
     (defun my/yasnippet-ac-integration ()
       "Disable autocomplete when able to expand a snippet.  Otherwise, autocomplete."

@@ -18,7 +18,7 @@
 (defun my/setup-eshell ()
   "Set up my eshell config"
   (linum-mode -1)
-  (setq show-trailing-whitespace -1))
+  (setq show-trailing-whitespace nil))
 
 (global-set-key (kbd "<f8>") 'my/toggle-eshell-buffer)
 

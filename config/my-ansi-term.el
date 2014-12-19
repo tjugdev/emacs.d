@@ -1,6 +1,7 @@
 (require 'use-package)
 
 (declare-function evil-set-initial-state "evil-core")
+(declare-function evil-set-initial-state "evil-core")
 
 (defun my/visit-ansi-term-buffer ()
   "Show/hide ansi-term buffer"
@@ -11,13 +12,15 @@
         (ansi-term (getenv "SHELL")))
     (switch-to-buffer-other-window "*ansi-term*")))
 
-(eval-after-load 'evil
+(eval-after-load 'yasnippet
   '(progn
-     (evil-set-initial-state 'term-mode 'emacs)))
+        (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))))
+
 (defun my/setup-ansi-term ()
   "Set up my ansi-term config"
+  (setq comint-move-point-for-output t)
   (linum-mode -1)
-  (setq show-trailing-whitespace -1))
+  (setq show-trailing-whitespace nil))
 
 (defadvice term-sentinel (around my/advice-term-sentinel (proc msg) activate)
   "Kill ansi-term buffer when process dies"

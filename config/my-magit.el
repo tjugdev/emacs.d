@@ -12,9 +12,14 @@
     ;; This is my M-x and it's already defined as 4 as well
     (define-key magit-mode-map (kbd "M-s") nil)
 
+    (magit-save-some-buffers nil)
+
     (eval-after-load 'evil
       '(progn
          (evil-set-initial-state 'magit-mode 'emacs)
-         (evil-set-initial-state 'git-commit-mode 'insert)))))
+         (evil-set-initial-state 'git-commit-mode 'insert)))
+    (eval-after-load 'yasnippet
+      '(progn
+            (add-hook 'magit-mode-hook (lambda () (yas-minor-mode -1)))))))
 
 (provide 'my-magit)
